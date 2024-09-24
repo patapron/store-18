@@ -1,0 +1,32 @@
+<div
+  class="h-full border-2 border-gray-100 border-opacity-50 rounded-lg overflow-hidden p-2 flex flex-col justify-between shadow-none hover:shadow-xl cursor-pointer"
+  [routerLink]="['/products', product().id]"
+>
+  <div>
+    <img
+      class="lg:h-48 md:h-36 w-full object-contain object-center"
+      src="{{ product().image }}"
+      alt="{{ product().title }}"
+    />
+    <h2 class="tracking-widest title-font font-medium text-gray-400 mb-1">
+      {{ product().category }}
+    </h2>
+    <h1 class="title-font text-lg font-medium text-gray-900 mb-1">
+      {{ product().title }}
+    </h1>
+    <!-- <p class="leading-relaxed mb-2 text-xs">
+        {{ product().description | ellipsis : 100 }}
+      </p> -->
+  </div>
+  <div class="flex items-center justify-between mt-1">
+    <p class="font-bold">
+      {{ product().price | currency : "EUR" : "symbol" : "1.2-2" }}
+    </p>
+    <button
+      class="px-2 py-1 text-white bg-orange-500 rounded hover:bg-orange-700"
+      (click)="onAddToCard()"
+    >
+      Add to cart
+    </button>
+  </div>
+</div>
