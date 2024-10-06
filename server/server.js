@@ -4,10 +4,10 @@ const stripe = require("stripe")(
 );
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const cors = require("cors");
-const { ReturnStatement } = require("@angular/compiler");
+// const { ReturnStatement } = require("@angular/compiler");
 
+const app = express();
 app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,7 +25,7 @@ app.post("/checkout", async (req, res) => {
         },
         unit_amount: item.price * 100,
       },
-      quantity: items.qty,
+      quantity: item.qty,
     };
   });
 
@@ -36,18 +36,18 @@ app.post("/checkout", async (req, res) => {
     cancel_url: `${YOUR_DOMAIN}/cancel.html`,
   });
 
-  res, status(200).json(session);
+  res.status(200).json(session);
 
   // res.send({ clientSecret: session.client_secret });
 });
 
-app.get("/session-status", async (req, res) => {
-  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+// app.get("/session-status", async (req, res) => {
+//   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
 
-  res.send({
-    status: session.status,
-    customer_email: session.customer_details.email,
-  });
-});
+//   res.send({
+//     status: session.status,
+//     customer_email: session.customer_details.email,
+//   });
+// });
 
 app.listen(4242, () => console.log("Running on port 4242"));

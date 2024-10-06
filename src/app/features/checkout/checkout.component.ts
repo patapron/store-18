@@ -15,7 +15,8 @@ export default class CheckoutComponent {
   private readonly _checkoutSvc = inject(CheckoutService);
 
   onProceedToPay(): void {
-    this._checkoutSvc.onProceedToPay();
+    console.log('pagando', this.cartStore.products());
+    this._checkoutSvc.onProceedToPay(this.cartStore.products());
   }
   removeItem(id: number): void {
     this.cartStore.removeFromCart(id);
