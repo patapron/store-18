@@ -15,8 +15,61 @@
       <a routerLink="/products" class="mr-5 hover:text-gray-900 cursor-pointer"
         >Products</a
       >
+      <div
+        class="relative"
+        (mouseenter)="showCart.set(true)"
+        (mouseleave)="showCart.set(false)"
+      >
+        <a routerLink="/checkout">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M6 6h15l-1.5 9H7.5L6 6z"></path>
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="17" cy="21" r="1"></circle>
+            <path d="M1 1h4l1 2h15"></path>
+          </svg>
+          <span
+            class="absolute right-0 px-1 text-lg font-bold text-white -top-1 bg-red-700 rounded-xl"
+            >{{ cartStore.productsCount() }}</span
+          >
+        </a>
+        @if (showCart() && cartStore.productsCount()) {
+        <div
+          [ngClass]="{ 'show-cart-animation': showCart() }"
+          class="absolute right-0 z-30 w-48 p-2 mt-2 text-white rounded-sm bg-slate-400"
+        >
+          <div class="flex justify-between flex-col">
+            @for (product of cartStore.products(); track $index) {
+            <span
+              >{{ product.qty }} x {{ product.title | slice : 0 : 9 }}
+              {{
+                product.subTotal || product.price
+                  | currency : "EUR" : "symbol" : "1.2-2"
+              }}</span
+            >
+            }
+          </div>
+          <hr class="my-4 border-gray-500 border-t-1" />
+          <div class="flex justify-between py-3 font-light">
+            Total:
+            <span class="not-italic font-bold">{{
+              cartStore.totalAmount() | currency
+            }}</span>
+          </div>
+        </div>
+        }
+      </div>
     </nav>
-    <button
+    <!-- <button
       class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
     >
       <svg
@@ -35,6 +88,6 @@
         <circle cx="17" cy="21" r="1"></circle>
         <path d="M1 1h4l1 2h15"></path>
       </svg>
-    </button>
+    </button> -->
   </div>
 </header>

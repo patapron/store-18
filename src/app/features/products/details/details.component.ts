@@ -10,6 +10,7 @@ import {
 import { ProductsService } from '@api/products.service';
 import { RatingStarsComponent } from '@shared/components/rating-stars/rating-stars.component';
 import { Product } from '@shared/models/product.interface';
+import { CartStore } from '@shared/store/shopping-cart.store';
 
 @Component({
   selector: 'app-details',
@@ -22,15 +23,17 @@ export default class DetailsComponent implements OnInit {
   starsArray: number[] = new Array(5).fill(0);
   productId = input<number>(0, { alias: 'id' });
   product!: Signal<Product | undefined>;
+  cartStore = inject(CartStore);
+
   private readonly productSvc = inject(ProductsService);
 
-  addToCartEvent = output<Product>();
+  // addToCartEvent = output<Product>();
 
   ngOnInit(): void {
     this.product = this.productSvc.getProductById(this.productId());
   }
   onAddToCard(): void {
-    // this.addToCartEvent.emit(this.product);
+    this.cartStore.addToCart(this.product() as Product);
   }
 
   generateSvg(index: number): any {

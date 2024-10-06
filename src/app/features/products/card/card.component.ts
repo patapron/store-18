@@ -15,7 +15,8 @@ export class CardComponent {
   product = input.required<Product>();
   addToCartEvent = output<Product>();
 
-  onAddToCard(): void {
+  onAddToCard(event: Event): void {
+    event.stopPropagation();
     this.addToCartEvent.emit(this.product());
   }
 }
