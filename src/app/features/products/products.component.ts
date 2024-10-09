@@ -13,8 +13,13 @@ import { CartStore } from '@shared/store/shopping-cart.store';
 })
 export default class ProductsComponent {
   private readonly productSvc = inject(ProductsService);
-  products = this.productSvc.products;
+  // products = this.productSvc.products;
   cartStore = inject(CartStore);
+  products = this.cartStore.productList();
+
+  ngOnInit(): void {
+    this.cartStore.loadProducts();
+  }
 
   onAddToCart(product: Product): void {
     this.cartStore.addToCart(product);
